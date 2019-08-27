@@ -5,84 +5,111 @@
     <title>user</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.css}"></link>
 </head>
-<script type="text/javascript">js代码</script>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+</script>
 <body class="container">
 <br/>
 <h2>坐标转换</h2>
 <br/>
 <div class="with:60%">
     <!--    <div style="margin: 10px 90px;">没有账户？先去<a  th:href="@{/toRegister}">注册</a></div>-->
-<!--    <form class="form-horizontal" th:action="@{/login}" method="post">
-        <div class="form-group">
-            <label class="col-sm-1 control-label">坐标系</label>
-            <div class="col-sm-6">
-                <input type="radio" name="火星坐标"/>火星坐标GCJ-02
-                <input type="radio" name="火星坐标"/>国际坐标WGS-84
-                <input type="radio" name="火星坐标"/>百度坐标BD-09
+    <!--    <form class="form-horizontal" th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label class="col-sm-1 control-label">坐标系</label>
+                <div class="col-sm-6">
+                    <input type="radio" name="火星坐标"/>火星坐标GCJ-02
+                    <input type="radio" name="火星坐标"/>国际坐标WGS-84
+                    <input type="radio" name="火星坐标"/>百度坐标BD-09
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-1 control-label">坐&nbsp;&nbsp;&nbsp;&nbsp;标</label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" name="loginName" id="cord" placeholder=""/>
+            <div class="form-group">
+                <label class="col-sm-1 control-label">坐&nbsp;&nbsp;&nbsp;&nbsp;标</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="loginName" id="cord" placeholder=""/>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-1 col-sm-6">
-                <input type="button" value="坐标转换" class="btn btn-info"/>
+            <div class="form-group">
+                <div class="col-sm-offset-1 col-sm-6">
+                    <input type="button" value="坐标转换" class="btn btn-info"/>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-1 control-label">火星坐标(GCJ-02)</label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" name="loginName" id="cord1" placeholder=""/>
+            <div class="form-group">
+                <label class="col-sm-1 control-label">火星坐标(GCJ-02)</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="loginName" id="cord1" placeholder=""/>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-1 control-label">国际坐标(WGS-84)</label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" name="loginName" id="cord2" placeholder=""/>
+            <div class="form-group">
+                <label class="col-sm-1 control-label">国际坐标(WGS-84)</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="loginName" id="cord2" placeholder=""/>
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-1 control-label">百度坐标(BD-09)</label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control" name="loginName" id="cord3" placeholder=""/>
+            <div class="form-group">
+                <label class="col-sm-1 control-label">百度坐标(BD-09)</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="loginName" id="cord3" placeholder=""/>
+                </div>
             </div>
-        </div>
-    </form>-->
+        </form>-->
     <br/>
-    <form class="form-horizontal" th:action="@{/import}" method="post" enctype="multipart/form-data" onsubmit="return toValid()">
+    <form class="form-horizontal" th:action="@{/import}" method="post" enctype="multipart/form-data"
+          onsubmit="return toValid()" target="form">
         <input id="file" type="file" name="file"/><br/><br/>
         <div class="col-sm-6">
             <input type="submit" value="Excel坐标提交" class="btn btn-info"/>
         </div>
     </form>
     <iframe name="form" id="form" style="display:none"></iframe>
-    <div class="col-sm-6">
+    <div id="test" class="col-sm-6">
         <button onclick="download()" class="btn btn-info">下载转换后的数据</button>
+    </div>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<div class="with:60%">
+    <h4>说明 ： 国际坐标(WGS-84)&nbsp;&nbsp;&nbsp;转&nbsp;&nbsp;&nbsp;国测局坐标(火星坐标GCJ-02)</h4>
+    <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        excel表格可以接受度分秒，度分，度度三种格式坐标，如：108°13′21 ，112°30.4128 ，112.50688</h4>
+    <h4>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        下面模板中包含三种坐标格式示例，其中包含一条错误格式数据，工具会自动识别</h4>
+    <br/>
+    <br/>
+    <div id="test2" class="col-sm-6">
+        <button onclick="download2()" class="btn btn-info">坐标转模板下载(示例)</button>
     </div>
 </div>
 </body>
 <script>
-    ${document}.ready(function () {
-        
-    })
+
+    $(document).ready(function () {
+        $("#test").hide();
+    });
 
     function toValid() {
         var file_obj = document.getElementById('file').files[0];
-        if(file_obj==null){
+        if (file_obj == null) {
             alert("请提交正确excel文件");
             return false;
         }
         var name = file_obj.name;
-        if(name.match(".xlsx")==null){
+        if (name.match(".xlsx") == null) {
             alert("请提交正确excel文件");
             return false;
         }
+        $("#test").show();
     }
+
     function download() {
         window.open('/export');
+        $("#test").hide();
+    }
+
+    function download2() {
+        window.open('/export2');
     }
 </script>
 </html>

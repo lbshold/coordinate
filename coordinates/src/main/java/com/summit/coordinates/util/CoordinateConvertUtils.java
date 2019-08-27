@@ -1,6 +1,6 @@
 package com.summit.coordinates.util;
 
-import com.summit.coordinates.common.MyObject;
+import com.summit.coordinates.common.Coordinate;
 import lombok.Data;
 
 /**
@@ -55,14 +55,14 @@ public class CoordinateConvertUtils {
     /**
      * 国际坐标(WGS84)转火星坐标系(GCJ02).
      *
-     * @param myObject
+     * @param coordinate
      * @return
      */
-    public static MyObject wgs84ToGcj02Copy(MyObject myObject) {
-        Point point = wgs84ToGcj02(Double.valueOf(myObject.getLongitude()), Double.valueOf(myObject.getLatitude()));
-        myObject.setLatitude(String.valueOf(point.lat));
-        myObject.setLongitude(String.valueOf(point.lng));
-        return myObject;
+    public static Coordinate wgs84ToGcj02Copy(Coordinate coordinate) {
+        Point point = wgs84ToGcj02(Double.valueOf(coordinate.getLongitude()), Double.valueOf(coordinate.getLatitude()));
+        coordinate.setLatitude(String.valueOf(point.lat));
+        coordinate.setLongitude(String.valueOf(point.lng));
+        return coordinate;
     }
 
     /**
@@ -86,6 +86,8 @@ public class CoordinateConvertUtils {
         dlng = (dlng * 180.0) / (a / sqrtmagic * Math.cos(radlat) * pi);
         double mglat = lat + dlat;
         double mglng = lng + dlng;
+        System.out.println(mglat);
+        System.out.println(mglng);
         return new Point(mglng, mglat);
     }
 

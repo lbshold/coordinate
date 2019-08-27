@@ -11,7 +11,7 @@ public class CoordinateUtil {
 
     /**
      * 经纬度转化，度分秒转度.
-     *
+     * 如：108°13′21″= 108.2225
      * @param jwd
      * @return
      */

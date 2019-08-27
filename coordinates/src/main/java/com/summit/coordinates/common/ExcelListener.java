@@ -12,11 +12,11 @@ import java.util.List;
  */
 public class ExcelListener extends AnalysisEventListener {
 
-    private List<MyObject> datas = new ArrayList<>();
+    private List<Coordinate> datas = new ArrayList<>();
 
     @Override
     public void invoke(Object obj, AnalysisContext analysisContext) {
-        datas.add((MyObject) obj);
+        datas.add((Coordinate) obj);
     }
 
     @Override
@@ -24,11 +24,11 @@ public class ExcelListener extends AnalysisEventListener {
 
     }
 
-    public List<MyObject> getDatas() {
+    public List<Coordinate> getDatas() {
         return datas;
     }
 
-    public void setDatas(List<MyObject> datas) {
+    public void setDatas(List<Coordinate> datas) {
         this.datas = datas;
     }
 }
